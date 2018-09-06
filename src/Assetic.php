@@ -37,7 +37,10 @@ class Assetic implements \Phulp\PipeInterface
         $files = $src->getDistFiles();
 
         foreach ($files as $key => $file) {
-            $assets[$key] = new StringAsset($file->getContent());
+            $root = $file->getBasePath();
+            $rel = $file->getRelativePath().DIRECTORY_SEPARATOR.$file->getName();
+
+            $assets[$key] = new StringAsset($file->getContent(), [], $root, $rel);
         }
 
         // If a filename is set we concat the files. This allows us to process the list
